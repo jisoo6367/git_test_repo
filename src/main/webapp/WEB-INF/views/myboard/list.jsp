@@ -96,15 +96,28 @@
                     	<c:choose>
                     	<c:when test="${not empty pagingCreator.myboardList}">
 	                    	<c:forEach var="myboard" items="${pagingCreator.myboardList}">
-	                        <tr class="moveDetail" data-bno='<c:out value="${myboard.bno}"/>' >
-	                            <td><c:out value="${myboard.bno }"/></td>
-	                       <%-- <td style="text-align:left"><a href="${contextPath}/myboard/detail?bno=${myboard.bno}">${myboard.btitle }</a></td> --%>
-	                            <td style="text-align:left">${myboard.btitle}</td>
-	                            <td>${myboard.bwriter }</td>
-	                            <td class="center"><fmt:formatDate value="${myboard.bregDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
-	                            <td class="center"><fmt:formatDate value="${myboard.bmodDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
-	                            <td class="center"><c:out value="${myboard.bviewCnt }"/></td>
-	                        </tr>
+	                    	
+	                    	<c:choose>
+	                    		<c:when test="${myboard.bdelFlag == 1 }">
+		                    		<tr style="background-color: Moccasin; text-align: center">
+							             <td>${board.bno }</td>
+							             <td colspan="6"><em>작성자에 의해서 삭제된 게시글입니다.</em></td>
+							         </tr>
+	                    		</c:when>
+	                    		<c:otherwise>
+	                    			<tr class="moveDetail" data-bno='<c:out value="${myboard.bno}"/>' >
+			                            <td><c:out value="${myboard.bno }"/></td>
+			                       <%-- <td style="text-align:left"><a href="${contextPath}/myboard/detail?bno=${myboard.bno}">${myboard.btitle }</a></td> --%>
+			                            <td style="text-align:left">${myboard.btitle}</td>
+			                            <td>${myboard.bwriter }</td>
+			                            <td class="center"><fmt:formatDate value="${myboard.bregDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
+			                            <td class="center"><fmt:formatDate value="${myboard.bmodDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
+			                            <td class="center"><c:out value="${myboard.bviewCnt }"/></td>
+			                        </tr>
+	                    		</c:otherwise>
+	                    	</c:choose>
+	                    	
+
 	                        </c:forEach>
                         </c:when>
                         <c:otherwise>

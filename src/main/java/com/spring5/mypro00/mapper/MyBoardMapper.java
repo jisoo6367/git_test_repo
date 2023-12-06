@@ -26,6 +26,9 @@ public interface MyBoardMapper {
 	//게시물 삭제(DELETE)
 	public int deleteMyboard(long bno);
 	
+	//게시물 삭제요청(UPDATE)
+	public int updateBdelFlag(long bno);
+	
 	//게시물 조회수 증가
 	public int updateBviewCnt(long bno);
 	

@@ -27,8 +27,22 @@
 		    <version>1.5</version>
 		</dependency>
  		
+ 		<!-- 새로추가: jackson-core -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.16.0</version>
+		</dependency>
  		
- 		<!-- 새로 추가: gson -->
+ 		<!-- 새로추가: jackson-annotations -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-annotations</artifactId>
+		    <version>2.16.0</version>
+		</dependency>
+ 		
+ 		
+ 		<!-- 새로 추가: gson (테스트 시에, 자바 객체 -> JSON 타입 문자열로 변환) -->
  		<dependency>
 		    <groupId>com.google.code.gson</groupId>
 		    <artifactId>gson</artifactId>
@@ -49,7 +63,7 @@
 		    <version>2.16.0</version>
 		</dependency>
  		
- 		<!-- 새로 추가: jackson-dataformat-xml -->
+ 		<!-- 새로 추가: jackson-dataformat-xml (자바 객체 -> JSON 객체로 변환) -->
  		<dependency>
 		    <groupId>com.fasterxml.jackson.dataformat</groupId>
 		    <artifactId>jackson-dataformat-xml</artifactId>

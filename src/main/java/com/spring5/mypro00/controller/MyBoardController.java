@@ -151,7 +151,7 @@ public class MyBoardController {
 	}
 	
 	
-	
+//  특정 게시물 삭제 요청
 //	특정 게시물 삭제 POST /myboard/remove
 	@PostMapping("/remove")
 	public String removeBoard(Long bno, RedirectAttributes redirectAttr,
@@ -159,7 +159,8 @@ public class MyBoardController {
 		
 		//boolean removeResult = myBoardService.removeBoard(bno);
 		
-		if(myBoardService.removeBoard(bno)) {
+		if(myBoardService.modifyBdelFlag(bno)) {
+		//if(myBoardService.removeBoard(bno)) {
 			redirectAttr.addFlashAttribute("result", "successRemove");
 		
 		} else {

@@ -102,6 +102,21 @@ public class MyBoardServiceImpl implements MyBoardService {
 		return (rows == 1) ;
 	}
 	
+	
+	//게시물 삭제 요청
+	@Override
+	public boolean modifyBdelFlag(long bno) {
+		
+		int rows = myBoardMapper.updateBdelFlag(bno);
+		
+		return (rows == 1) ;
+	}
+	
+	
+	
+	
+	
+	
 	//특정 게시물 수정 삭제 화면 호출 & 수정 후 조회페이지 호출
 	@Override
 	public MyBoardVO getBoard2(long bno) {

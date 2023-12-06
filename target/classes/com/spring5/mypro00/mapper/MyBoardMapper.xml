@@ -25,7 +25,7 @@
 	<!-- <select id="selectMyBoardList" resultType="com.spring5.mypro00.domain.MyBoardVO"
 			parameterType="com.spring5.mypro00.common.paging.domain.MyBoardPagingDTO">
 		<![CDATA[
-			SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewsCnt, breplyCnt, bdelFlag
+			SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewCnt, breplyCnt, bdelFlag
 			FROM (SELECT /*+ INDEX_DESC (a, pk_myboard)*/ rownum rn, a.*
 			      FROM book_ex.tbl_myboard a
 		]]>
@@ -89,7 +89,7 @@
 	<!-- <select id="selectMyBoardList" resultType="com.spring5.mypro00.domain.MyBoardVO"
 			parameterType="com.spring5.mypro00.common.paging.domain.MyBoardPagingDTO">
 		<![CDATA[
-			SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewsCnt, breplyCnt, bdelFlag
+			SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewCnt, breplyCnt, bdelFlag
 			FROM (SELECT /*+ INDEX_DESC (a, pk_myboard)*/ rownum rn, a.*
 			      FROM book_ex.tbl_myboard a
 			      WHERE 
@@ -156,7 +156,7 @@
 	<select id="selectMyBoardList" resultType="com.spring5.mypro00.domain.MyBoardVO"
 			parameterType="com.spring5.mypro00.common.paging.domain.MyBoardPagingDTO">
 		<![CDATA[
-			SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewsCnt, breplyCnt, bdelFlag
+			SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewCnt, breplyCnt, bdelFlag
 			FROM (SELECT /*+ INDEX_DESC (a, pk_myboard)*/ rownum rn, a.*
 			      FROM book_ex.tbl_myboard a
 			      WHERE rownum <= (#{pageNum} * #{rowAmountPerPage})
@@ -169,7 +169,7 @@
 	<!-- <select id="selectMyBoardList" resultType="com.spring5.mypro00.domain.MyBoardVO"
 			parameterType="com.spring5.mypro00.common.paging.domain.MyBoardPagingDTO">
 		<![CDATA[
-			SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewsCnt, breplyCnt, bdelFlag
+			SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewCnt, breplyCnt, bdelFlag
 			FROM (SELECT /*+ INDEX_DESC (a, pk_myboard)*/ rownum rn, a.*
 			      FROM book_ex.tbl_myboard a
 			      WHERE rownum <= (#{pageNum} * #{rowAmountPerPage})
@@ -205,7 +205,7 @@
 	
 <!-- 특정 게시물 조회 -->
 	<select id="selectMyBoard" resultType="com.spring5.mypro00.domain.MyBoardVO">
-		SELECT bno, btitle, bcontent, bwriter, bregdate, bmoddate, bviewsCnt, breplyCnt, bdelFlag
+		SELECT bno, btitle, bcontent, bwriter, bregdate, bmoddate, bviewCnt, breplyCnt, bdelFlag
 		FROM book_ex.tbl_myboard
 		WHERE bno = #{bno}
 	</select>
@@ -219,16 +219,26 @@
 		WHERE bno = #{bno}
 	</update>
 	
-<!-- 게시물 삭제(READ) -->
+<!-- 게시물 삭제(DELETE) -->
 	<delete id="deleteMyboard" parameterType="long">
 		DELETE FROM book_ex.tbl_myboard
 		WHERE bno = #{bno}
 	</delete>
 	
+	
+<!-- 게시물 삭제요청( bdelFlag를 1로 업데이트 ) -->
+	<update id= "updateBdelFlag" parameterType="long">
+		UPDATE book_ex.tbl_myboard	
+		SET bdelFlag = 1
+		WHERE bno = #{bno}
+	</update>
+
+	
+	
 	<!-- 특정 게시물 조회수 증가 -->
 	<update id="updateBviewCnt">
 	   UPDATE book_ex.tbl_myboard
-	   set bviewscnt = bviewscnt+1
+	   set bviewCnt = bviewCnt+1
 	   where bno = #{bno}
     </update>
    
