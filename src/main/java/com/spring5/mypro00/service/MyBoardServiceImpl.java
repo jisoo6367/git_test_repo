@@ -124,14 +124,7 @@ public class MyBoardServiceImpl implements MyBoardService {
 		int rows = myBoardMapper.updateBviewCnt(bno) ;
 		
 		MyBoardVO myBoard = myBoardMapper.selectMyBoard(bno);
-		System.out.println("myBoard: " + myBoard);
-		System.out.println("조회수: " + myBoard.getBviewCnt());
 		
-//		if (rows == 1) {
-//			return myBoard ;
-//		} else {
-//			return null ;
-//		}
 		return (rows == 1) ? myBoard : null; 
 		
 	}
@@ -141,7 +134,6 @@ public class MyBoardServiceImpl implements MyBoardService {
 	public MyBoardVO getBoard2(long bno) {
 		
 		MyBoardVO myBoard = myBoardMapper.selectMyBoard(bno);
-		System.out.println("myBoard: " + myBoard);
 
 		return myBoard ; 
 		

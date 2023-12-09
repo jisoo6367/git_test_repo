@@ -96,8 +96,6 @@ public class MyBoardController {
 
 		MyBoardVO myboard = null ;
 		
-		System.out.println("result: " + result) ;
-		
 		if (result == null) {//목록페이지에서 조회요청
 		myboard = myBoardService.getBoard(bno) ;	
 		
@@ -107,10 +105,6 @@ public class MyBoardController {
 		
 		model.addAttribute("myboard", myboard) ;
 		model.addAttribute("result", result) ;
-		
-		System.out.println("model: " + model);
-		//System.out.println("myboard: " + model.getAttribute("myboard"));
-		//System.out.println("result: " + model.getAttribute("result"));
 		
 		return "myboard/detail" ;
 	}

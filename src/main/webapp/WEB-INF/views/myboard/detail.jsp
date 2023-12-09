@@ -220,8 +220,6 @@ $("#btnToModify").on("click", function(){
 });
 
 
-
-
 var result = '<c:out value="${result}" />' ;
 //alert("result" + result);
 
@@ -242,6 +240,7 @@ function runModal(result) {
 	myMsg = "" ;
 }
 </script>
+
 <script src="${contextPath }/resources/js/mycomment.js"></script>
 <script>
 

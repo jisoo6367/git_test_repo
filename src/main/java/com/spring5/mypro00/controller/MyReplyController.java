@@ -33,7 +33,7 @@ public class MyReplyController {
 	@GetMapping( value="/{bno}/page/{pageNum}" ,
 			     produces = {"application/json;charset=utf-8" , 
 			    			 "application/xml;charset=utf-8"  }
-				) //produces: 브라우저로 보내는 데이터 형식을 설정합니다.
+				) //produces: 브라우저로 보내는 데이터 형식을 설정합니다.  
 	public ResponseEntity<MyReplyPagingCreatorDTO> 
 				showReplyList(	@PathVariable("bno") long bno,
 								@PathVariable("pageNum") Integer pageNum ){

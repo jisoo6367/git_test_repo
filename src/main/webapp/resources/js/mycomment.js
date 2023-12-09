@@ -8,8 +8,8 @@ var myReplyClsr = (function(){
 	//댓글 목록(페이징) - ajax() 함수 사용
     function getCmtList(myParam, callback, error) {
         var bno = myParam.bno ;
-        var pageNum = (myParam.pageNum != null)? myParam.pageNum:1
-        //var pageNum = myParam.pageNum || 1 ;
+        //var pageNum = (myParam.pageNum != null)? myParam.pageNum:1
+        var pageNum = myParam.pageNum || 1 ;
         console.log("getCmtList()가 전달받은 bno: " + bno) ;
         console.log("getCmtList()가 전달받은 pageNum: " + pageNum) ;
 
