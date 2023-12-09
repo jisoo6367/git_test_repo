@@ -102,7 +102,7 @@ public class MyBoardController {
 		myboard = myBoardService.getBoard(bno) ;	
 		
 		} else if (result != null) {//수정 후 조회 요청
-		myboard = myBoardService.getBoard2(bno) ;	
+		myboard = myBoardService.getBoard2(bno) ;
 		}
 		
 		model.addAttribute("myboard", myboard) ;

@@ -8,23 +8,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@AllArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class MyReplyVO {
 	
-	private long rno;
-	private String rcontent;
-	private String rwriter;
-	private Date rRegDate;
-	private Date rModDate;
-	private long bno;
+	private long rno ;
+	private String rcontent ;
+	private String rwriter ;
+	private Date rRegDate ;
+	private Date rModDate ;
+	private long bno ;
 	private long prno ;
-	private int rdelFlag;
+	private int rdelFlag ;
 	
-	private int lvl ; //오라클 계층쿼리의 level 값을 저장할 필드
-	
+	private int lvl ;  //오라클 계층쿼리의 level 값을 저장할 필드
 
 }

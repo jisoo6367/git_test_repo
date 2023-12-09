@@ -224,7 +224,7 @@ $("#btnToRegister").on("click",function(){
 });
 
 //상세페이지 이동
-$(".moveDetail").on("click", function() {
+$(".moveDetail").on("click", function() { //data-bno="${myboard.bno }"
 	var bno = $(this).data("bno") ;
 	
 //	window.location.href = "${contextPath}/myboard/detail?bno=" + bno ;
@@ -327,12 +327,11 @@ $(document).ready(function(){
 	runModal(result) ;
 });
 
-	window.addEventListener("popstate", function(event){
-		history.pushState(null, null, location.href);
-				
-	});
-
+window.addEventListener("popstate", function(event){
 	history.pushState(null, null, location.href);
+});
+
+history.pushState(null, null, location.href);
 
 
 </script>

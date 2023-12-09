@@ -6,15 +6,18 @@ import com.spring5.mypro00.domain.MyReplyVO;
 
 import lombok.Getter;
 import lombok.ToString;
+
 @Getter
 @ToString
 public class MyReplyPagingCreatorDTO {
-	private List<MyReplyVO> myReplyList;
-	private long replyTotCnt;
 	
-	public MyReplyPagingCreatorDTO(List<MyReplyVO> myReplyList, 
-									long replyTotCnt) {
-		this.myReplyList = myReplyList;
-		this.replyTotCnt = replyTotCnt;
+	private List<MyReplyVO> myreplyList ;
+	private long replyTotCnt ;
+	
+	public MyReplyPagingCreatorDTO(List<MyReplyVO> myreplyList, 
+								   long replyTotCnt) {
+		this.myreplyList = myreplyList ;
+		this.replyTotCnt = replyTotCnt ;
 	}
+
 }

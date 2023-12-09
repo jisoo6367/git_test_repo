@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>   
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 
@@ -59,11 +59,11 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="${contextPath }/resources/dist/js/sb-admin-2.js"></script>
-    
+
 	<!-- favicon.ico 404 Error 해결 -->  
 	<link rel="shortcut icon" href="${contextPath}/resources/myicon/favicon.ico" type="image/x-icon">
-	<!-- favicon 을 사용하지 않도록 설정-->
- 	<!-- <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> -->
+	<!-- favicon 을 사용하지 않도록 설정--><!-- 
+	<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> -->
 </head>
 
 <body id="me">
@@ -400,6 +400,5 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-        
 
-        
+ 
