@@ -41,9 +41,16 @@ public class MyReplyServiceImpl implements MyReplyService {
 	@Override
 	public MyReplyPagingCreatorDTO getReplyList(MyReplyPagingDTO myreplyPaging) {
 		
-		List<MyReplyVO> myreplyList = myReplyMapper.selectMyReplyList(myreplyPaging) ;
-		
 		long replyTotCnt = myReplyMapper.selectRowTotal(myreplyPaging.getBno()) ;
+		
+		int pageNum = myreplyPaging.getPageNum();
+		
+		if(pageNum == -10) {
+			pageNum =(int)Math.ceil((double) replyTotCnt/myreplyPaging.getRowAmountPerPage());
+			myreplyPaging.setPageNum(pageNum);
+		}
+
+		List<MyReplyVO> myreplyList = myReplyMapper.selectMyReplyList(myreplyPaging) ;
 		
 		MyReplyPagingCreatorDTO myreplyPagingCreator
 			= new MyReplyPagingCreatorDTO(myreplyList, replyTotCnt, myreplyPaging);

@@ -15,14 +15,14 @@ public class MyReplyPagingCreatorDTO {
 	
 	private List<MyReplyVO> myreplyList ;
 	private long replyTotCnt ;
-	private MyReplyPagingDTO myReplyPaging;
+	private MyReplyPagingDTO myreplyPaging;
 	
 	public MyReplyPagingCreatorDTO(List<MyReplyVO> myreplyList, 
 								   long replyTotCnt,
-								   MyReplyPagingDTO myReplyPaging) {
+								   MyReplyPagingDTO myreplyPaging) {
 		this.myreplyList = myreplyList ;
 		this.replyTotCnt = replyTotCnt ;
-		this.myReplyPaging = myReplyPaging;
+		this.myreplyPaging = myreplyPaging;
 	}
 
 }

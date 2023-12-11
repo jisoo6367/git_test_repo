@@ -25,14 +25,14 @@ public class MyReplyPagingDTO {
 		
 		this.bno = bno ;
 		
-		if (pageNum == null || pageNum <= 0) {
+		if (pageNum == null) {
 			this.pageNum = 1 ;
 			
 		} else {
 			this.pageNum = pageNum;
 		}
 		
-		this.rowAmountPerPage = 10 ;
+		this.rowAmountPerPage = 5 ;
 		
 	}
 	
