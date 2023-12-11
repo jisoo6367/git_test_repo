@@ -10,8 +10,6 @@ var myReplyClsr = (function(){
         var bno = myParam.bno ;
         //var pageNum = (myParam.pageNum != null)? myParam.pageNum:1
         var pageNum = myParam.pageNum || 1 ;
-        console.log("getCmtList()가 전달받은 bno: " + bno) ;
-        console.log("getCmtList()가 전달받은 pageNum: " + pageNum) ;
 
         //댓글 목록 조회 컨트롤러의 매핑 URL: GET /replies/{bno}/page/{pageNum}
         //$.ajax() 함수는, 자바스크립트 객체를 매개값으로 받아 처리

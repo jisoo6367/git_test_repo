@@ -55,6 +55,7 @@ public class MyReplyController {
 				 produces = {"text/plain; charset=utf-8"} )		//produces:메서드--> 브라우저로 보내는 데이터 유형
 	public ResponseEntity<String> registerReplyForBoard(@PathVariable("bno") long bno ,
 														@RequestBody MyReplyVO myreply) {
+												//데이터만 보내주는 전송방식에서 consumes 로 온 json을 자동으로 걸러서 myReplyVO 에 넣어줌. 아주 편리
 		Long registeredRno = myReplyService.registerReplyForBoard(myreply);
 		String _registeredRno = null ;
 		if (registeredRno != null) {
