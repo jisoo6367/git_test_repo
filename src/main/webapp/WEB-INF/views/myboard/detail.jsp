@@ -260,6 +260,16 @@
 
                         var frmCmtPagingValue = $("#frmCmtPagingValue");
 
+                        //페이징 번호 표시
+                        function showCmtPagingNums(replyTotCnt, pageNum, rowAmountPerPage) {
+
+                           var pagingNumCnt = 5;
+
+                           var endPagingNum = Math.ceil(pageNum / pagingNumCnt) * pagingNumCnt;
+                           var startPagingNum = endPaingNum - (pagingNumCtn - 1)
+
+                        };
+
                         //댓글목록 표시 함수: 서버로부터 전달된 데이터를 이용해서 댓글 목록을 표시하는 JS 함수
                         function showCmtList(pageNum) {
 
@@ -267,6 +277,11 @@
                               { bno: bnoValue, pageNum: pageNum || 1 },
 
                               function (myReplyPagingCreator) {
+
+                                 frmCmtPagingValue.find("input[name='pageNum']").val(pageNum);
+                                 frmCmtPagingValue.find("input[name='rowAmountPerPage']")
+                                 				  .val(myReplyPagingCreator.myreplyPaging.rowAmountPerPage);
+
                                  var str = '';
 
                                  if (!myReplyPagingCreator.myreplyList || myReplyPagingCreator.myreplyList.length == 0) {
@@ -294,16 +309,34 @@
                                           + '    data-bno="' + bnoValue + '" '
                                           + '    data-rno="' + myReplyPagingCreator.myreplyList[i].rno + '" '
                                           + '    data-rwriter="' + myReplyPagingCreator.myreplyList[i].rwriter + '" '
-                                          + '    data-rdelflag="' + myReplyPagingCreator.myreplyList[i].rdelFlag + '">'
-                                          + '      <span class="header info-rwriter">'
+                                          + '    data-rdelflag="' + myReplyPagingCreator.myreplyList[i].rdelFlag + '">';
+                
+                <%--댓글 답글 들여쓰기--%>
+                if (myReplyPagingCreator.myreplyList[i].lvl == 1) {
+                                          str += '<div>'
+                                       } else if (myReplyPagingCreator.myreplyList[i].lvl == 2) {
+                                          str += '<div style="padding-left: 25px;">';
+                                       } else if (myReplyPagingCreator.myreplyList[i].lvl == 3) {
+                                          str += '<div style="padding-left: 50px;">';
+                                       } else if (myReplyPagingCreator.myreplyList[i].lvl == 4) {
+                                          str += '<div style="padding-left: 70px;">';
+                                       } else {
+                                          str += '<div style="padding-left: 100px;">';
+                                       }
+                                       if (myReplyPagingCreator.myreplyList[i].lvl > 1) {
+                                          str += '   <i class="fa fa-reply fa-fw"></i>&nbsp;';
+                                       }
+
+                                       str += '      <span class="header info-rwriter">'
                                           + '    <strong class="primary-font">' + myReplyPagingCreator.myreplyList[i].rwriter + '</strong>&nbsp;&nbsp;'
                                           + '    <small class="text-muted">' + myReplyClsr.myDateTimeFmt(myReplyPagingCreator.myreplyList[i].rmodDate) + '</small>'
                                           + '    </sapn>'
                                           + '      <p data-bno = "' + myReplyPagingCreator.myreplyList[i].bno + '" '
                                           + '           data-rno = "' + myReplyPagingCreator.myreplyList[i].rno + '">'
-                                          + 			myReplyPagingCreator.myreplyList[i].rcontent + '</p>'
+                                          + myReplyPagingCreator.myreplyList[i].rcontent + '</p>'
                                           + '    <button type="button" style="display:in-block;" '
                                           + '             class="btn btn-primary btn-xs btnChgReplyreg">답글작성</button>'
+                                          + '</div>'
                                           + '</li>';
 
 
@@ -316,44 +349,70 @@
 
                            );
 
-                        }//showCmtList-end
-                        <%-- 답글작성처리 - (이벤트 전파)--%>
-                        $("ul#chat").on("click", ".commentLi .btnChgReplyreg", function () {
-                           var strTxtBoxReply = 
-                               "<textarea class='form-control txtBoxReply' name='rcontent' style='margin-bottom:10px;'"
-                        	 + "        placeholder='답글작성을 원하시면, &#10;답글 작성 버튼을 클릭해주세요.'"
-                        	 + "         ></textarea>"
-                        	 + "<button type='button' class='btn btn-warning btn-xs btnRegReply'>답글 등록</button>"
-                        	 + "<button type='button' class='btn btn-danger btn-xs btnCancelRegReply'"
-                        	 + "       style='margin-left:4px;'>취소</button>";
-                        	 
-                        	$(this).after(strTxtBoxReply);
-                        	$(this).attr("style", "display:none");
-                        	
-                        });
-                        
-                        <%-- 답글 등록 버튼 클릭 처리 ( 이벤트 전파 )
-                        #chat > li:nth-child(1) > span > button.btn.btn-warning.btn-xs.btnRegReply
-                        --%>
-                        $("#chat").on("click", "li .btnRegReply", function(){
-                        	var rcontent = $(this).prev().val();//prev() : 동일한 열에서 바로 이전 즉, 소스 상 위에있는 내용
-                        	var loginUser = "홍길동";
-                        	var prno = $(this).closest("p").data("rno");
-                        	
-                        	var reply = {bno: bnoValue, rcontent: rcontent, rwriter: loginUser, prno: prno}
-                        	
-                        	myReplyClsr.registerReply(
-                        			reply,
-                        			function(result){
-                        				alert(result + "번 답글이 등록됨.");
-                        				
-                        				var _pagNum = 
-                        				showCmtList(pageNum);
-                        			};
-                        	);
-                        });
-                        
 
+                        }//showCmtList-end
+						<%--댓글 작성 버튼 클릭 처리: 이벤트 전파--%>
+                           $("#btnChgCmtReg").on("click", function () {
+
+                              $(this).attr("style", "display:none");
+                              $("#btnRegCmt").attr("style", "display:in-block; margin-right:2px");
+                              $("#btnCancelRegCmt").attr("style", "display:in-block;");
+                              $(".txtBoxCmt").attr("readonly", false)
+
+                           })
+
+                           <%--댓글 등록 버튼 클릭 처리: 이벤트 전파--%>
+                              $("#btnRegCmt").on("click", ".commentLi .btnRegReply", function () {
+                                 var rcontent = $(".txtBoxCmt").val();
+                                 var loginUser = "슈퍼맨";
+
+                                 var reply = { bno: bnoValue, rcontent: rcontent, rwriter: loginUser };
+
+                                 myReplyClsr.registerReply(
+                                    reply,
+                                    function (result) {
+                                       alert(result + "번 답글이 등록되었습니다.");
+                                       var _pageNum = frmCmtPagingValue.find('input[name="pagenum"]').val();
+                                       showCmtlist(pageNum);
+                                    }
+                                 );
+                              })
+
+                              <%--답글 작성 버튼 클릭 처리: 이벤트 전파
+                        #chat > li: nth - child(1) > button--%>
+                           $("#chat").on("click", ".commentLi .btnChgReplyreg", function () {
+                              var strTxtBoxReply =
+                                 "<textarea class='form-control txtBoxReply' name='rcontent' style='margin-bottom:10px;'"
+                                 + "        placeholder='답글작성을 원하시면, &#10;답글 작성 버튼을 클릭해주세요.'"
+                                 + "         ></textarea>"
+                                 + "<button type='button' class='btn btn-warning btn-xs btnRegReply'>답글 등록</button>"
+                                 + "<button type='button' class='btn btn-danger btn-xs btnCancelRegReply'"
+                                 + "       style='margin-left:4px;'>취소</button>";
+
+                              $(this).after(strTxtBoxReply);
+                              $(this).attr("style", "display:none;");
+
+                           })
+
+                           <%--답글 등록 버튼 클릭 처리: 이벤트 전파
+                        #chat > li: nth - child(1) > span > button.btn.btn - warning.btn - xs.btnRegReply
+                        --%>
+                           $("#chat").on("click", ".commentLi .btnRegReply", function () {
+                              var rcontent = $(this).prev().val();
+                              var loginUser = "홍길동";
+                              var rwriter = loginUser;
+                              var prno = $(this).closest("li").data("rno");
+                              var reply = { bno: bnoValue, rcontent: rcontent, rwriter: rwriter, prno: prno };
+
+                              myReplyClsr.registerReply(
+                                 reply,
+                                 function (result) {
+                                    alert(result + "번 답글이 등록되었습니다.");
+                                    var _pageNum = frmCmtPagingValue.find('input[name="pagenum"]').val();
+                                    showCmtlist(pageNum);
+                                 }
+                              );
+                           })
 
                      </script>
 

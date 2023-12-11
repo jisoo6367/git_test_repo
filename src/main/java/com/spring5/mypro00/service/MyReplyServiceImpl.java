@@ -46,7 +46,7 @@ public class MyReplyServiceImpl implements MyReplyService {
 		long replyTotCnt = myReplyMapper.selectRowTotal(myreplyPaging.getBno()) ;
 		
 		MyReplyPagingCreatorDTO myreplyPagingCreator
-			= new MyReplyPagingCreatorDTO(myreplyList, replyTotCnt);
+			= new MyReplyPagingCreatorDTO(myreplyList, replyTotCnt, myreplyPaging);
 				
 		return myreplyPagingCreator ;
 		
