@@ -271,13 +271,11 @@
 		WHERE bno = #{bno}
 	</update>
 
-
- 	
- 	
- 	
- 	
- 	<select id="selectSysdate" resultType="java.util.Date">
- 		select sysdate from dual
- 	</select>
+<!--  게시물 댓글 수 증가 -->
+	<update id="updateBreplyCnt">
+		update book_ex.tbl_myboard
+		set breplycnt = breplycnt - 1
+		where bno = #{bno};
+	</update>
 
 </mapper>
