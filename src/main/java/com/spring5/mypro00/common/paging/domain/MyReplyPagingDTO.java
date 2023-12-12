@@ -32,7 +32,7 @@ public class MyReplyPagingDTO {
 			this.pageNum = pageNum;
 		}
 		
-		this.rowAmountPerPage = 5 ;
+		this.rowAmountPerPage = 10 ;
 		
 	}
 	

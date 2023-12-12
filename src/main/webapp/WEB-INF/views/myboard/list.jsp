@@ -232,7 +232,9 @@ $(".moveDetail").on("click", function() { //data-bno="${myboard.bno }"
 	frmSendValue.append("<input type='hidden' name='bno' value=' " + bno + " '/>");
 	frmSendValue.attr("action", "${contextPath}/myboard/detail").attr("method", "get");
 	frmSendValue.submit();
-
+	frmSendValue.find('input[name="bno"]').remove(); //브라우저의 뒤로가기는 위의 bno가 url에 남아있어서 다른 게시글을 
+													//눌러도 위의 bno로 들어가짐. 따라서 서브밋하고 위의 bno값을 제거시킴.
+													//즉 초기화시켜준거임.
 });
 
 //모달

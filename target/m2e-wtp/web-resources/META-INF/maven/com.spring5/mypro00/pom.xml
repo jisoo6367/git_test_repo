@@ -182,6 +182,15 @@
          <version>${org.aspectj-version}</version>
       </dependency>   
       
+      <!-- 새로 추가됨 : aspectjweaver -->
+      <dependency>
+             <groupId>org.aspectj</groupId>
+             <artifactId>aspectjweaver</artifactId>
+             <version>${org.aspectj-version}</version>
+             <scope>runtime</scope>
+      </dependency>
+      
+      
       <!-- Logging -->
       <dependency>
          <groupId>org.slf4j</groupId>

@@ -58,13 +58,12 @@ public class MyReplyController {
 												//데이터만 보내주는 전송방식에서 consumes 로 온 json을 자동으로 걸러서 myReplyVO 에 넣어줌. 아주 편리
 		Long registeredRno = myReplyService.registerReplyForBoard(myreply);
 		String _registeredRno = null ;
+		
 		if (registeredRno != null) {
 			_registeredRno = String.valueOf(registeredRno) ;
 		} else {
 			_registeredRno = String.valueOf(registeredRno) ;
 		}
-		
-		System.out.println("_registeredRno: " + _registeredRno);
 		
 		return registeredRno != null ? new ResponseEntity<String>(_registeredRno, HttpStatus.OK) 
 									 : new ResponseEntity<String>(_registeredRno, HttpStatus.INTERNAL_SERVER_ERROR);

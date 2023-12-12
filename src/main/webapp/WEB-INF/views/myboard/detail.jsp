@@ -134,31 +134,7 @@
             
 
 <ul class="chat" id="chat">
-<%-- 댓글 목록 표시 영역 - JavaScript로 내용이 생성되어 표시됩니다.--%><%-- 
-   <li class="left clearfix commentLi" data-bno="123456" data-rno="12">
-      <div>
-         <div>
-            <span class="header info-rwriter">
-               <strong class="primary-font">user00</strong>
-               <span>&nbsp;</span>
-               <small class="text-muted">2018-01-01 13:13</small>
-            </span>
-            <p>앞으로 사용할 댓글 표시 기본 템플릿입니다.</p>
-         </div>
-         
-         <div class="btnsComment" style="margin-bottom:10px">
-            <button type="button" style="display:in-block"
-                  class="btn btn-primary btn-xs btnChgReg">답글 작성</button>
-            <button type="button" style="display:none"
-                  class="btn btn-warning btn-xs btnRegCmt">답글 등록</button>
-            <hr class="txtBoxCmtHr" style="margin-top:10px; margin-bottom:10px">
-            <textarea class="form-control txtBoxCmtMod" name="rcontent" 
-                    style="margin-bottom:10px"
-                    placeholder="답글작성을 원하시면,&#10;답글 작성 버튼을 클릭해주세요."
-                   ></textarea>
-         </div>
-      </div>
-   </li> --%>
+
 </ul><%-- /.chat --%>
 
 
@@ -403,12 +379,13 @@ function showCmtList(pageNum){
                 +              myReplyClsr.myDateTimeFmt(myReplyPagingCreator.myreplyList[i].rmodDate) 
                 + '        </small>'
                 + '    </span>'
-                + '    <p data-bno="' + myReplyPagingCreator.myreplyList[i].bno + '"' 
-                + '       data-rno="' + myReplyPagingCreator.myreplyList[i].rno + '">'
-                + '        <pre>' + myReplyPagingCreator.myreplyList[i].rcontent + '</pre></p>'
+                + '    <p class="rcontent-p" style="white-space:pre-wrap;" ' 
+                + '         data-bno="' + myReplyPagingCreator.myreplyList[i].bno + '"' 
+                + '        data-rno="' + myReplyPagingCreator.myreplyList[i].rno + '">'
+                +                myReplyPagingCreator.myreplyList[i].rcontent + '</p>'
+                + '   </div>'
                 + '    <button type="button" style="display:in-block;" ' 
                 + '            class="btn btn-primary btn-xs btnChgReplyReg">답글작성</button>'
-                + '</div>'
                + '</li>' ;
                
                 
@@ -519,11 +496,6 @@ $("#chat").on("click", "li .btnRegReply", function(){
 <%-- 답글 작성 버튼 클릭 후 취소 버튼 처리 --%>
 <%-- #chat > li:nth-child(1) > div > button.btn.btn-danger.btn-xs.btnCancelRegReply --%>
 $("#chat").on("click", "li .btnCancelRegReply", function(){
-   <%--
-   var replyCancelTxt = '<button type="button" style="display:in-block"'
-                  +  'class="btn btn-primary btn-xs btnChgReg">답글 작성</button>'
-   $(this).after(replyCancelTxt)
-   $(this).attr("style", "display:none;")--%>
    
    $(".btnRegReply").remove();
    $(".btnCancelRegReply").remove();
@@ -532,7 +504,74 @@ $("#chat").on("click", "li .btnCancelRegReply", function(){
    
 })
 
+<%-- 댓글/답글 수정: 글내용이 표시된 p를 클릭 시 입력창, 수정, 삭제, 취소 버튼 화면에 표시 --%>
+$("#chat").on("click", "li div p", function(){
+   var rcontent = $(this).text();
 
+   var strTxtBoxReply =
+        "<textarea class='form-control txtBoxMod' name='rcontent' style='margin-bottom:10px;'></textarea>"
+      + "<button type='button' class='btn btn-warning btn-sm btnModCmt'>수정</button> "
+      + "<button type='button' class='btn btn-danger btn-sm btnDelCmt'>삭제</button>"
+      + "<button type='button' class='btn btn-info btn-sm btnCancelCmt' style='margin-left: 4px;'>취소</button>";
+      
+   $(this).after(strTxtBoxReply);
+   $(".txtBoxMod").val(rcontent);
+   $(this).attr("style", "display:none;");
+   
+      //아래는 잘못된 코드 : 선택된 p를 기준으로 p의 조상들(부모 포함) 중에 가장 가까운 button을 찾음
+      //$(this).closest("button").attr("style", "display:none;");   
+   
+   $(this).parents("li").find(".btnChgReplyReg").attr("style", "display:none;");
+});
+
+<%-- 댓글-답글 수정 --%>
+$("#chat").on("click", "li div button", function(){
+	var rcontent = $(this).prev().val();
+	var rno = $(this).siblings("p").data("rno");
+	var cmtReply = {bno: bnoValue, rno: rno, rcontent: rcontent};
+	
+	myReplyClsr.modifyCmtReply(
+		cmtReply,
+		function(result){
+			var _pageNum = frmCmtPagingValue.find('input[name="pageNum"]').val();
+			showCmtList(_pageNum);
+		}
+	);
+})
+
+<%-- 댓글-답글 삭제 --%>
+$("#chat").on("click", "li div button.btnDelCmt", function(){
+	if(!confirm("진짜로?")){
+		return;
+	};
+	
+//	var rno = $(this).parents("li").data("rno"); 아래와 동
+	var rno = $(this).closest("li.commentLi").data("rno");
+	var bnoAndRno = {bno: bnoValue, rno: rno};
+	
+	myReplyClsr.removeCmtReply(
+		bnoAndRno,
+		function(){
+			var _pageNum = frmCmtPagingValue.find('input[name="pageNum"]').val();
+			showCmtList(_pageNum);
+		}
+	);
+});
+
+
+<%-- 댓글-답글 삭제를 취소 --%>
+$("#chat").on("click", "li div button.btnCancelCmt", function(){
+	//서버로 요청이 감
+	/* var _pageNum = frmCmtPagingValue.find('input[name="pageNum"]').val();
+	showCmtList(_pageNum); */
+	
+	//서버로 요청 안보내고 브라우저에서 처리
+	$(this).siblings("textarea").remove();
+	$(this).siblings("button").remove();
+	$(this).siblings("p").attr("style", "display:in-block;");
+	$(this).parents("li").find(".btnChgReplyReg").attr("style", "display:in-block;");
+	$(this).remove();
+});
 
 </script>
 
