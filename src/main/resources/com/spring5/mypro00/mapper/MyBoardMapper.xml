@@ -213,16 +213,6 @@
 					
 
 <!-- 게시물 등록(CREATE) -->
-<!-- selectkey 이용않함 --><!-- 
-	<insert id="insertMyBoard" parameterType="com.spring5.mypro00.domain.MyBoardVO">
-		INSERT INTO book_ex.tbl_myboard
-		VALUES (book_ex.seq_myboard.nextval,
-        		#{btitle},
-        		#{bcontent},
-        		#{bwriter},
-        		DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
-	</insert> -->
-
 	<insert id="insertMyBoard" parameterType="com.spring5.mypro00.domain.MyBoardVO">
 		<selectKey order="BEFORE" keyProperty="bno" resultType="long">
 			SELECT book_ex.seq_myboard.nextval FROM dual
@@ -271,11 +261,11 @@
 		WHERE bno = #{bno}
 	</update>
 
-<!--  게시물 댓글 수 증가 -->
+<!-- 게시물의 댓글 개수 수정: 댓글추가 시에 #{amount}에 1, 댓글삭제 시 #{amount}에 -1 이 각각 전달됨 -->
 	<update id="updateBreplyCnt">
 		update book_ex.tbl_myboard
-		set breplycnt = breplycnt - 1
-		where bno = #{bno};
+		set breplyCnt = breplyCnt + #{amount}
+		where bno = #{bno}
 	</update>
 
 </mapper>

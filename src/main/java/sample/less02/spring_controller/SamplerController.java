@@ -437,18 +437,4 @@ public class SamplerController {
 		  
 	  }
 	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
 }     

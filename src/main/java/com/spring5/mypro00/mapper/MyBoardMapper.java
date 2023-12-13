@@ -2,6 +2,8 @@ package com.spring5.mypro00.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.spring5.mypro00.common.paging.domain.MyBoardPagingDTO;
 import com.spring5.mypro00.domain.MyBoardVO;
 
@@ -31,7 +33,8 @@ public interface MyBoardMapper {
 	//게시물 조회수 증가(+1씩 증가)
 	public int updateBviewCnt(long bno) ;
 	
-	
+	//게시물 댓글 개수 수정
+	public void updateBreplyCnt(@Param("bno")Long bno,@Param("amount")int amount);
 	
 	
 	//public Date selectSysdate() ;

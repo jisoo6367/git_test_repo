@@ -50,6 +50,14 @@
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<!-- 파일 업로드 관련 추가 내용 -->
+		<multipart-config>
+			<location>C:/myupload/temp</location><!-- 임시 업로드 경로 -->
+		 	<max-file-size>20971520</max-file-size><!-- 20MB: 업로드가 허용되는 한 개 파일의 최대크기 -->
+		 	<max-request-size>41943040</max-request-size><!-- 40MB: 한 번의 업로드 요청에서 허용되는 최대 파일 크기 -->
+		 	<file-size-threshold>20971520</file-size-threshold><!-- 20MB --><!-- 메모리 제한 크기 -->
+		 </multipart-config>
+		 <!-- 파일 업로드 관련 추가 내용 끝 -->
 	</servlet>
 	
 			<!-- /WEB-INF/spring/appServlet/sample-context.xml -->

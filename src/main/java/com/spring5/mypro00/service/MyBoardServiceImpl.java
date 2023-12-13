@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring5.mypro00.common.paging.domain.MyBoardPagingCreatorDTO;
 import com.spring5.mypro00.common.paging.domain.MyBoardPagingDTO;
@@ -118,6 +119,7 @@ public class MyBoardServiceImpl implements MyBoardService {
 	}
 
 	//특정 게시물 조회: 특정 게시물 하나의 데이터를 가져옴
+	@Transactional
 	@Override
 	public MyBoardVO getBoard(long bno) {
 		
@@ -144,9 +146,8 @@ public class MyBoardServiceImpl implements MyBoardService {
 	public boolean modifyBoard(MyBoardVO myBoard) {
 		
 		int rows = myBoardMapper.updateMyBoard(myBoard) ;
-		return rows == 1 ;
 		
-//		return myBoardMapper.updateMyBoard(myBoard) == 1 ;
+		return rows == 1 ;
 	}
 
 	@Override
@@ -157,6 +158,7 @@ public class MyBoardServiceImpl implements MyBoardService {
 		return (rows == 1) ;
 	}
 	
+	@Transactional
 	@Override
 	public boolean modifyBdelFlag(long bno) {
 		

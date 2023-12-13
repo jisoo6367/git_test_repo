@@ -111,7 +111,10 @@
 				<tr class="moveDetail" data-bno="${myboard.bno }">
 					<td><c:out value="${myboard.bno }"/></td><%-- 
 					<td style="text-align: left"><a href="${contextPath }/myboard/detail?bno=${myboard.bno}" ><c:out value="${myboard.btitle }"/></a></td> --%>
-					<td style="text-align: left"><c:out value="${myboard.btitle }"/></td>
+					<td style="text-align: left">
+						<c:out value="${myboard.btitle }"/>
+						<small>[댓글수: <strong><c:out value="${myboard.breplyCnt}"/></strong>]</small>
+					</td>
 					<td>${myboard.bwriter }</td>
 					<td class="center"><fmt:formatDate value="${myboard.bregDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
 					<td class="center"><fmt:formatDate value="${myboard.bmodDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
