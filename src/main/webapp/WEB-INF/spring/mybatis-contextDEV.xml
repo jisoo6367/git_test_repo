@@ -35,6 +35,7 @@
 			<list>
 				<value>classpath:com/spring5/mypro00/mapper/MyBoardMapper.xml</value>
 				<value>classpath:com/spring5/mypro00/mapper/MyReplyMapper.xml</value>
+				<value>classpath:com/spring5/mypro00/mapper/MyBoardAttachFileMapper.xml</value>
 			</list>
 		</property>	
 		
@@ -46,9 +47,9 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
-<!-- 5. Mybatis Mapper 파일을 액세스하는 인터페이스의 위치를 설정 -->
-	<mybatis-spring:scan base-package="com.spring5.mypro00.mapper" factory-ref="sqlSessionFactory"/><!-- 	
-	<mybatis-spring:scan base-package="com.spring5.mypro00.mapper" template-ref="sqlSession"/> -->
+<!-- 5. Mybatis Mapper 파일을 액세스하는 인터페이스의 위치를 설정 --><!-- 
+	<mybatis-spring:scan base-package="com.spring5.mypro00.mapper" factory-ref="sqlSessionFactory"/> -->	
+	<mybatis-spring:scan base-package="com.spring5.mypro00.mapper" template-ref="sqlSession"/>
 	
 <!-- @Transaction 어노테이션 기능을 활성화(스프링 트랜잭션 기능 활성화) -->
     <tx:annotation-driven transaction-manager="txManager"/>

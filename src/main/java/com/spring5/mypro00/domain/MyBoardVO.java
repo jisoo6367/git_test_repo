@@ -2,6 +2,7 @@ package com.spring5.mypro00.domain;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,5 +29,7 @@ public class MyBoardVO {
 	private int bviewCnt ;
 	private int breplyCnt ;
 	private int bdelFlag ; //0: 유지, 1: 삭제요청됨
+	
+	private List<MyBoardAttachFileVO> attachFileList;
 
 }
