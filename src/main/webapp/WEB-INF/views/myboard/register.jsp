@@ -80,30 +80,68 @@
 </div><%-- /#page-wrapper --%>
 
 <script>
+var frmBoard = document.getElementById("frmBoard") ;
+
 //수정된 게시물 입력값 유무 확인 함수
-function sendBoard(){
-	var frmBoard = document.getElementById("frmBoard") ;
+function checkBoardValues(){
+
 	var btitle = document.getElementById("btitle").value ;
 	var bcontent = document.getElementById("bcontent").value ;
 	var bwriter = document.getElementById("bwriter").value ;
 	
 	if( btitle.length==0 || bcontent.length==0 || bwriter.length==0 ){
-		alert("글제목/글내용/작성자를 모두 입력해야 합니다.");
+
+		return false ;
 	} else {
-//		frmBoard.method="post";
-//		frmBoard.action="${contextPath}/myboard/register";
-		frmBoard.submit();
+		return true ;
+		
 	}
 
 }
 
 $("#btnRegister").on("click", function(){
-	sendBoard() ;
+	if(!checkBoardValues()){
+		alert("글제목/글내용/작성자를 모두 입력해야 합니다.");
+		return ;
+	}
+	var frmBoard = document.getElementById("frmBoard") ;
+	var attachFileInputHTML = "";
+	
+
+	<%-- li요소의 값들을 읽어와서 hidden input을 생성하는 html텍스트를 생성하는 함수--%>
+	$("div.fileUploadResult ul li").each(function(i, obj){
+		
+		var objLi = $(obj) ;
+		
+		if(objLi == null) {
+			return;
+		}
+		
+		attachFileInputHTML
+			+= "<input type='hidden' name='attachFileList[" + i + "].uuid' value='"+ objLi.data("uuid") +"'>"
+			+= "<input type='hidden' name='attachFileList[" + i + "].uploadPath' value='"+ objLi.data("uploadpath") +"'>"
+			+= "<input type='hidden' name='attachFileList[" + i + "].fileName' value='"+ objLi.data("filename") +"'>"
+			+= "<input type='hidden' name='attachFileList[" + i + "].fileType' value='"+ objLi.data("filetype") +"'>" ;
+	});//each-end
+	
+	if(attachFileInputHTML != "") {
+		frmBoard.append(attachFileInputHTML);
+	}
+
+	
+//	frmBoard.method="post";
+//	frmBoard.action="${contextPath}/myboard/register";
+	frmBoard.submit();
+		
 });
 </script>
 
 <%-- 첨부 파일 처리 --%>
 <script>
+
+//input 초기화를 위해 div 요소의 비어있는 input 요소를 복사해서 저장함.
+//var cloneFileInput = $(".uploadDiv").clone();
+
 <%-- 확장자 및 크기 제한 --%>
 function checkUploadFile(fileName, fileSize){
 	   
@@ -143,11 +181,14 @@ function showUploadResult (uploadResult){
 									 attachFile.fileName );
 		
 		if(attachFile.fileType == "F") {
-			htmlStr += "<li>"
-					+"		<a href='${contextPath}/fileDownloadAjax?fileName=" + fullFileName + "'>"
+			htmlStr += "<li data-uploadpath='" + attachFile.uploadPath + "'"
+					+" data-uuid='" + attachFile.uuid + "'"
+					+" data-filename='" + attachFile.fileName + "'"
+					+" data-filetype='F'>"
+//					+"		<a href='${contextPath}/fileDownloadAjax?fileName=" + fullFileName + "'>"
 					+"			<img src='${contextPath}/resources/img/icon-attach.png' style='width:25px;'>"
 					+"&nbsp;"+ attachFile.fileName 
-					+"		</a>"
+//					+"		</a>"
 		            +  "  <span data-filename='" + fullFileName + "' data-filetype='F'>[삭제]</span>" //data타입-에는 소문자만!
 					+ "</li>";
 		} else {
@@ -157,23 +198,29 @@ function showUploadResult (uploadResult){
 									  attachFile.fileName );
 			
 			htmlStr 
-				+= "<li>"
+				+= "<li data-uploadpath='" + attachFile.uploadPath + "'"
+				+" data-uuid='" + attachFile.uuid + "'"
+				+" data-filename='" + attachFile.fileName + "'"
+				+" data-filetype='I'>"
 //				+"		<a href='${contextPath}/fileDownloadAjax?fileName=" + fullFileName + "'>" //다운로드
-				+"		<a href=\"javascript:showImage('"+ fullFileName +"')\">"		
+//				+"		<a href=\"javascript:showImage('"+ fullFileName +"')\">"		
 				+"			<img src='${contextPath}/displayThumbnail?fileName="+ thumbnail +"'>"
 				+"&nbsp;"+ attachFile.fileName
-				+"		</a>"
+//				+"		</a>"
 	            +  "  <span data-filename='" + thumbnail + "' data-filetype='I'>[삭제]</span>"
 				+"</li>";
 		}
 	});<%--each-end--%>
 	
-	fileUploadResult.html(htmlStr);
-//	fileUploadResult.append(htmlStr);
+//	fileUploadResult.html(htmlStr);
+	fileUploadResult.append(htmlStr);
 }
 
 <%-- 업로드 처리 --%>
-$("#btnFileUpload").on("click", function(){
+
+//$("#btnFileUpload").on("cilck", function(){
+<%--파일 업로드 처리: 파일 input 요소의 내용이 바뀌면 업로드가 자동으로 수행되도록 수정--%>
+$("#inputFile").on("change", function(){
    //FormData() Ajax 파일 전송 시에 사용되는 Web API 클래스의 생성자
    var formData = new FormData();
    
@@ -224,6 +271,7 @@ $("#btnFileUpload").on("click", function(){
 //         console.log(attachFileList);
 			console.log(uploadResult);
          
+//		$(".uploadDiv").html(cloneFileInput.html());
          $(".inputFile").val("");
          
          showUploadResult(uploadResult);

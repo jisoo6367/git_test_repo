@@ -77,6 +77,15 @@ public class MyBoardController {
 	@PostMapping("/register")
 	public String registerNewBoard(MyBoardVO myboard ,
 			                       RedirectAttributes redirectAttr) {
+		if(myboard.getAttachFileList() != null) {
+			myboard.getAttachFileList()
+					.forEach(attachFile -> System.out.println(attachFile.toString()));
+		} else {
+			System.out.println("<<<<<<<<<<<<<<첨부파일 없음>>>>>>>>>>>>>>>");
+		}System.out.println();
+		
+		
+		
 		
 		long bno = myBoardService.registerBoard(myboard);
 		

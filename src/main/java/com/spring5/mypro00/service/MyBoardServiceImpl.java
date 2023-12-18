@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.spring5.mypro00.common.paging.domain.MyBoardPagingCreatorDTO;
 import com.spring5.mypro00.common.paging.domain.MyBoardPagingDTO;
+import com.spring5.mypro00.domain.MyBoardAttachFileVO;
 import com.spring5.mypro00.domain.MyBoardVO;
+import com.spring5.mypro00.mapper.MyBoardAttachFileMapper;
 import com.spring5.mypro00.mapper.MyBoardMapper;
 
 @Service  //서비스 (구현)클래스는 DAO 또는 mapper 인터페이스의 메서드를 호출합니다.
@@ -20,9 +22,12 @@ public class MyBoardServiceImpl implements MyBoardService {
 	
 	private MyBoardMapper myBoardMapper ;
 	
+	private MyBoardAttachFileMapper myBoardAttachFileMapper;
+	
 	//방법2: 모든 필드 초기화 생성자
-	public MyBoardServiceImpl(MyBoardMapper myBoardMapper) {
+	public MyBoardServiceImpl(MyBoardMapper myBoardMapper, MyBoardAttachFileMapper myBoardAttachFileMapper) {
 		this.myBoardMapper = myBoardMapper;
+		this.myBoardAttachFileMapper = myBoardAttachFileMapper;
 		System.out.println("MyBoardServiceImpl의 모든 필드 초기화생성자입니다.");
 		System.out.println("myBoardMapper: " + myBoardMapper);
 	}
@@ -101,21 +106,34 @@ public class MyBoardServiceImpl implements MyBoardService {
 
 	//게시물 등록
 	@Override //저장된 게시물의 bno 값을 반환
-	public long registerBoard(MyBoardVO myBoard) {
+	@Transactional
+	public long registerBoard(MyBoardVO myboard) {
 		
-		//System.out.println("컨트롤러 ->서비스로 전달된 myBoard: " + myBoard);
+		//System.out.println("컨트롤러 ->서비스로 전달된 myboard: " + myboard);
 		//컨트롤러 ->서비스로 전달된 myBoard: MyBoardVO(bno=0, btitle=서비스 새글 입력  테스트 제목, ....)
 		
-		//long rows = myBoardMapper.insertMyBoard(myBoard) ; 
+		//long rows = myBoardMapper.insertMyBoard(myboard) ; 
 		//System.out.println("rows: " + rows); //1
 		
-		//System.out.println("DB 처리 후myBoard: " + myBoard);
+		//System.out.println("DB 처리 후myboard: " + myboard);
 		//DB 처리 후myBoard: MyBoardVO(bno=41, btitle=서비스 새글 입력  테스트 제목, ....)
 		
-		//return (rows == 1) ? myBoard.getBno() : 0;
+		//return (rows == 1) ? myboard.getBno() : 0;
+		myBoardMapper.insertMyBoard(myboard) ;
 		
-		myBoardMapper.insertMyBoard(myBoard) ;
-		return myBoard.getBno() ;
+		List<MyBoardAttachFileVO> attachFileList = myboard.getAttachFileList();
+		
+		if(attachFileList != null && attachFileList.size() > 0) {
+			attachFileList.forEach(
+					attachFile -> {
+							attachFile.setBno(myboard.getBno());
+							myBoardAttachFileMapper.insertAttachFile(attachFile);
+			});//forEach-end
+		}//if-end
+		
+		
+//		myBoardMapper.insertMyBoard(myboard) ;
+		return myboard.getBno() ;
 	}
 
 	//특정 게시물 조회: 특정 게시물 하나의 데이터를 가져옴
