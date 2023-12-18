@@ -48,13 +48,11 @@
 	        onclick="location.href='${contextPath}/myboard/list';">취소</button>
 	
 </form>                  
-                  
-                    
-
                 </div><!-- /.panel-body -->
             </div><!-- /.panel -->
         </div><!-- /.col-lg-12 -->
     </div><!-- /.row -->
+    
  <%-- 첨부파일 결과 표시 --%>   
     <div class="row">
         <div class="col-lg-12">
@@ -104,7 +102,8 @@ $("#btnRegister").on("click", function(){
 		alert("글제목/글내용/작성자를 모두 입력해야 합니다.");
 		return ;
 	}
-	var frmBoard = document.getElementById("frmBoard") ;
+//	var frmBoard = document.getElementById("frmBoard") ;
+	var frmBoard = $("#frmBoard") ;
 	var attachFileInputHTML = "";
 	
 
@@ -119,9 +118,9 @@ $("#btnRegister").on("click", function(){
 		
 		attachFileInputHTML
 			+= "<input type='hidden' name='attachFileList[" + i + "].uuid' value='"+ objLi.data("uuid") +"'>"
-			+= "<input type='hidden' name='attachFileList[" + i + "].uploadPath' value='"+ objLi.data("uploadpath") +"'>"
-			+= "<input type='hidden' name='attachFileList[" + i + "].fileName' value='"+ objLi.data("filename") +"'>"
-			+= "<input type='hidden' name='attachFileList[" + i + "].fileType' value='"+ objLi.data("filetype") +"'>" ;
+			+ "<input type='hidden' name='attachFileList[" + i + "].uploadPath' value='"+ objLi.data("uploadpath") +"'>"
+			+ "<input type='hidden' name='attachFileList[" + i + "].fileName' value='"+ objLi.data("filename") +"'>"
+			+ "<input type='hidden' name='attachFileList[" + i + "].fileType' value='"+ objLi.data("filetype") +"'>" ;
 	});//each-end
 	
 	if(attachFileInputHTML != "") {

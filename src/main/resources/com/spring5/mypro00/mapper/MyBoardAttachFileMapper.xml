@@ -14,7 +14,7 @@
 <!--첨부파일 추가 -->
 	<insert id="insertAttachFile">
 		INSERT INTO book_ex.tbl_myAttachFiles
-		VALUES (#{uuid}, #{uploadPath}, #{fileNAme}, #{fileType}, #{bno})
+		VALUES (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno})
 	</insert>
 
 <!--특정 첨부파일 삭제 -->

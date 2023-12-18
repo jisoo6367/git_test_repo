@@ -17,6 +17,6 @@ public class MyBoardAttachFileVO {
 	private String uploadPath ; 
 	private String fileName ;
 	private String fileType ;
-	private long bno ;
+	private Long bno ;
 	private String repoPath = "C:/myupload" ;
 }

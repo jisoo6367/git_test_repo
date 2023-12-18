@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring5.mypro00.common.paging.domain.MyBoardPagingCreatorDTO;
 import com.spring5.mypro00.common.paging.domain.MyBoardPagingDTO;
+import com.spring5.mypro00.domain.MyBoardAttachFileVO;
 import com.spring5.mypro00.domain.MyBoardVO;
 import com.spring5.mypro00.service.MyBoardService;
 
@@ -77,7 +78,13 @@ public class MyBoardController {
 	@PostMapping("/register")
 	public String registerNewBoard(MyBoardVO myboard ,
 			                       RedirectAttributes redirectAttr) {
-		if(myboard.getAttachFileList() != null) {
+		
+		List<MyBoardAttachFileVO> myAttachFileList = myboard.getAttachFileList();
+		
+		
+//		if(myboard.getAttachFileList() != null) {
+		if(myAttachFileList != null) {
+			
 			myboard.getAttachFileList()
 					.forEach(attachFile -> System.out.println(attachFile.toString()));
 		} else {
