@@ -139,34 +139,55 @@ public class MyBoardServiceImpl implements MyBoardService {
 	//특정 게시물 조회: 특정 게시물 하나의 데이터를 가져옴
 	@Transactional
 	@Override
-	public MyBoardVO getBoard(long bno) {
+	public MyBoardVO getBoard(long bno, String result) {
 		
-		int rows = myBoardMapper.updateBviewCnt(bno) ;
+//		int rows = myBoardMapper.updateBviewCnt(bno) ;
 		
-		MyBoardVO myBoard = myBoardMapper.selectMyBoard(bno);
+		MyBoardVO myboard = myBoardMapper.selectMyBoard(bno);
+
+		if (result == null) {//목록페이지에서 조회요청
+		myBoardMapper.updateBviewCnt(bno) ;	
 		
-		return (rows == 1) ? myBoard : null; 
+		} 
+		
+		return myboard; 
 		
 	}
 	
-	//특정 게시물 수정 삭제 화면 호출 & 수정 후 조회페이지 호출
+	//특정 게시물 수정 삭제 화면 호출 
 	@Override
 	public MyBoardVO getBoard2(long bno) {
 		
-		MyBoardVO myBoard = myBoardMapper.selectMyBoard(bno);
+		MyBoardVO myboard = myBoardMapper.selectMyBoard2(bno);
 
-		return myBoard ; 
+		return myboard ; 
 		
 	}
 
 	//특정 게시물 수정
 	@Override
-	public boolean modifyBoard(MyBoardVO myBoard) {
+	public boolean modifyBoard(MyBoardVO myboard) {
+//		int rows = myBoardMapper.updateMyBoard(myBoard) ;
+//		return rows == 1 ;
 		
-		int rows = myBoardMapper.updateMyBoard(myBoard) ;
+		//게시물 수정
+		//첨부파일 정보 수정(기존 첨부파일정보 삭제 후에 수정페이지에서 전달된 파일 정보 입력)
+		long bno = myboard.getBno();
 		
-		return rows == 1 ;
-	}
+		boolean boardModifyResult = (myBoardMapper.updateMyBoard(myboard) == 1);
+		
+		List<MyBoardAttachFileVO> attachFileList = myboard.getAttachFileList();
+		
+		if(boardModifyResult && myboard.getAttachFileList() != null) {
+			for(MyBoardAttachFileVO attachFile : attachFileList) {
+				attachFile.setBno(bno);
+				myBoardAttachFileMapper.insertAttachFile(attachFile);
+			}//for-end
+		};//if-end
+
+		
+		return boardModifyResult ;
+	}//if-end
 
 	@Override
 	public boolean removeBoard(long bno) {
@@ -184,5 +205,19 @@ public class MyBoardServiceImpl implements MyBoardService {
 
 		return (rows == 1) ;
 	}
+	
+	
+	
+	//특정 게시물의 첨부파일 목록조회
+	@Override
+	public List<MyBoardAttachFileVO> getAttachFileList (Long bno) {
+		return myBoardAttachFileMapper.selectAttachFiles(bno);
+	}
+	
+	
+	
+	
+	
+	
 
 }

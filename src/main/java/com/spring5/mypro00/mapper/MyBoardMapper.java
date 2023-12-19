@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.spring5.mypro00.common.paging.domain.MyBoardPagingDTO;
+import com.spring5.mypro00.domain.MyBoardAttachFileVO;
 import com.spring5.mypro00.domain.MyBoardVO;
 
 public interface MyBoardMapper {
@@ -18,8 +19,11 @@ public interface MyBoardMapper {
 	//새 게시물 등록(CREATE)
 	public int insertMyBoard(MyBoardVO myBoard) ;
 	
-	//특정 게시물 조회: 특정 게시물 하나의 데이터를 가져옴
+	//특정 게시물 조회(detail.jsp, JOIN-SELECT): 특정 게시물 하나의 데이터를 가져옴
 	public MyBoardVO selectMyBoard(long bno) ;
+	
+	//특정 게시물 조회(modify.jsp, 단순-SELECT): 특정 게시물 하나의 데이터를 가져옴
+	public MyBoardVO selectMyBoard2(long bno) ;
 	
 	//특정 게시물 수정(UPDATE)
 	public int updateMyBoard(MyBoardVO myBoard) ;
@@ -36,6 +40,8 @@ public interface MyBoardMapper {
 	//게시물 댓글 개수 수정
 	public void updateBreplyCnt(@Param("bno")Long bno,@Param("amount")int amount);
 	
+	
+
 	
 	//public Date selectSysdate() ;
 }

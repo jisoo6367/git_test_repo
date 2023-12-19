@@ -80,7 +80,7 @@
 <script>
 var frmBoard = document.getElementById("frmBoard") ;
 
-//수정된 게시물 입력값 유무 확인 함수
+<%--수정된 게시물 입력값 유무 확인 함수--%>
 function checkBoardValues(){
 
 	var btitle = document.getElementById("btitle").value ;

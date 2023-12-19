@@ -20,5 +20,8 @@ public interface MyBoardAttachFileMapper {
 	//(on delete cascade 옵션이 없는 F.K인 경우),  
 	public void deleteAttachFiles (Long bno) ;
 	
+	//특정 게시물의 첨부파일 목록조회
+	public List<MyBoardAttachFileVO> getAttachFileList (Long bno) ;
+	
 	
 }

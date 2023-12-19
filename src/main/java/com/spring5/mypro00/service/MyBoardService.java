@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.spring5.mypro00.common.paging.domain.MyBoardPagingCreatorDTO;
 import com.spring5.mypro00.common.paging.domain.MyBoardPagingDTO;
+import com.spring5.mypro00.domain.MyBoardAttachFileVO;
 import com.spring5.mypro00.domain.MyBoardVO;
 
 public interface MyBoardService {
@@ -16,7 +17,7 @@ public interface MyBoardService {
 	public long registerBoard(MyBoardVO myBoard) ;
 	
 	//특정 게시물 조회: 특정 게시물 하나의 데이터를 가져옴(조회수1증가 고려)
-	public MyBoardVO getBoard(long bno) ;
+	public MyBoardVO getBoard(long bno, String result) ;
 	
 	//특정 게시물 수정 삭제 화면 호출 & 수정 후 조회 페이지 호출(조회수 증가 없음)
 	public MyBoardVO getBoard2(long bno) ;
@@ -29,5 +30,7 @@ public interface MyBoardService {
 	
 	//특정 게시물 삭제요청(UPDATE)
 	public boolean modifyBdelFlag(long bno) ;
-
+	
+	//특정 게시물의 첨부파일 목록조회
+	public List<MyBoardAttachFileVO> getAttachFileList (Long bno);
 }
