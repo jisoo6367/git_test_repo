@@ -106,18 +106,6 @@
             </div><%-- /.panel --%>
          </div><%-- /.col-lg-12 --%>
       </div><%-- /.row --%>
-      
-<%-- Modal : 첨부파일 이미지 표시 --%>
-   <div class="modal fade" id="attachModal" tabindex="-1" role="dialog" aria-labelledby="attachModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog">
-         <div class="modal-content">
-            <div class="modal-body" id="attachModal-body">
-            <%-- 이미지 표시 --%>
-            </div>
-         </div><%-- /.modal-content --%>
-      </div><%-- /.modal-dialog --%>
-   </div><%-- /.modal --%>
 
  <%-- 첨부파일 결과 표시 --%>   
     <div class="row">
@@ -160,10 +148,10 @@
                  data-uuid = "${attachFile.uuid }" 
                  data-filename = "${attachFile.fileName }" 
                  data-filetype = "F" >
-                 <%-- <a href='${contextPath}/fileDownloadAjax?fileName=${fullFileName}'> --%>
+                 <a href='${contextPath}/fileDownloadAjax?fileName=${fullFileName}'>
                      <img src='${contextPath}/displayThumbnail?fileName=${thumbnail}' style='width:25px;'>
                      &nbsp;&nbsp;${attachFile.fileName} 
-                 <%-- </a> --%>
+                 </a>
              </li>
              <c:remove var="thumbnail"/>
          </c:otherwise>
@@ -204,20 +192,19 @@
              </div> <%-- /.panel-heading --%>
                 <div class="panel-body">
 
-				<%-- 댓글 입력창 div 시작 --%>
-				  <div class="form-group" style="margin-bottom: 5px;">
-				     <textarea class="form-control txtBoxCmt" name="rcontent"
-				        placeholder="댓글작성을 원하시면,&#10;댓글 작성 버튼을 클릭해주세요."
-				        readonly="readonly"></textarea>
-				  </div>
-				  <hr style="margin-top: 10px; margin-bottom: 10px;">
-				<%-- 댓글 입력창 div 끝 --%>
-				
-				
-				
-				<ul class="chat" id="chat">
-				   
-				</ul><%-- /.chat --%>
+                   <%-- 댓글 입력창 div 시작 --%>
+                      <div class="form-group" style="margin-bottom: 5px;">
+                         <textarea class="form-control txtBoxCmt" name="rcontent"
+                            placeholder="댓글작성을 원하시면,&#10;댓글 작성 버튼을 클릭해주세요."
+                            readonly="readonly"></textarea>
+                      </div>
+                      <hr style="margin-top: 10px; margin-bottom: 10px;"><%-- 댓글 입력창 div 끝 --%>
+
+
+
+                         <ul class="chat" id="chat">
+                            
+                         </ul><%-- /.chat --%>
 
 
                 </div><%-- /.panel-body --%>
@@ -235,7 +222,7 @@
 
             </div><%-- /#page-wrapper --%>
 
-<%-- Modal :게시물 수정 여부 모달--%>
+<%-- Modal --%>
    <div class="modal fade" id="yourModal" tabindex="-1" role="dialog" aria-labelledby="yourModalLabel"
       aria-hidden="true">
       <div class="modal-dialog">
@@ -302,22 +289,6 @@
       myMsg = "";
    }
 </script>
-
-<%-- 첨부파일 이미지 표시 --%>
-<script>
-$(".attachLi").on("click", function(){
-	var objLi = $(this);
-	
-	var imageFileName = '${fullFileName}';
-	
-	$("#attachModal-body").html("<img src='${contextPath}/fileDownload?fileName=" + encodeURI(imageFileName)+ "'>");
-	$("#attachModal").modal("show");
-});
-
-</script>
-
-
-
 <script src="${contextPath }/resources/js/mycomment.js"></script>
 <script>
 

@@ -248,7 +248,7 @@
 		<result property="bno" column="mybno"/>
 	</resultMap>
 	
-	<resultMap type="com.sprin5.mypro00.domain.MyBoardVO" id="myboardMap">
+	<resultMap type="com.spring5.mypro00.domain.MyBoardVO" id="myboardMap">
 		<result property="bno" column="bno"/>
 		<result property="btitle" column="btitle"/>
 		<result property="bcontent" column="bcontent"/>
