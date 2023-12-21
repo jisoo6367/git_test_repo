@@ -38,6 +38,7 @@ public interface MyBoardMapper {
 	public int updateBviewCnt(long bno) ;
 	
 	//게시물 댓글 개수 수정
+	//댓글 추가시에 #{amount}에 1, 삭제시 -1이 전달됨
 	public void updateBreplyCnt(@Param("bno")Long bno,@Param("amount")int amount);
 	
 	

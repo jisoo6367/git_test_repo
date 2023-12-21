@@ -173,7 +173,8 @@ public class MyBoardController {
 		
 		//boolean removeResult = myBoardService.removeBoard(bno);
 		
-		if(myBoardService.modifyBdelFlag(bno)) {
+		if(myBoardService.modifyBdelFlag(bno)) { //게시물 블라인드 처리
+		//if(myBoardService.removeBoard(bno)) { //게시물 삭제 (댓글이 없는 경우에만 동작)
 		//if(myBoardService.removeBoard(bno)) {
 			redirectAttr.addFlashAttribute("result", "successRemove");
 		

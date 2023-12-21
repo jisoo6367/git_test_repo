@@ -20,16 +20,16 @@ import com.spring5.mypro00.domain.MyBoardVO;
 import com.spring5.mypro00.mapper.MyBoardAttachFileMapper;
 import com.spring5.mypro00.mapper.MyBoardMapper;
 
-@Service  //서비스 (구현)클래스는 DAO 또는 mapper 인터페이스의 메서드를 호출합니다.
+//@Service  //서비스 (구현)클래스는 DAO 또는 mapper 인터페이스의 메서드를 호출합니다.
 		  //사용되는 DAO 또는 mapper 인터페이스 타입의 필드가 필요합니다.
-public class MyBoardServiceImpl implements MyBoardService {
+public class MyBoardServiceImpl2 implements MyBoardService {
 	
 	private MyBoardMapper myBoardMapper ;
 	
 	private MyBoardAttachFileMapper myBoardAttachFileMapper;
 	
 	//방법2: 모든 필드 초기화 생성자
-	public MyBoardServiceImpl(MyBoardMapper myBoardMapper, MyBoardAttachFileMapper myBoardAttachFileMapper) {
+	public MyBoardServiceImpl2(MyBoardMapper myBoardMapper, MyBoardAttachFileMapper myBoardAttachFileMapper) {
 		this.myBoardMapper = myBoardMapper;
 		this.myBoardAttachFileMapper = myBoardAttachFileMapper;
 		System.out.println("MyBoardServiceImpl의 모든 필드 초기화생성자입니다.");
@@ -198,17 +198,8 @@ public class MyBoardServiceImpl implements MyBoardService {
 	@Transactional
 	@Override
 	public boolean removeBoard(long bno) {
-		
-		//첨부파일 정보를 저장할 리스트 객체 생성
-		List<MyBoardAttachFileVO> attachFileList = getAttachFileList(bno);
-		
-		//업로드 파일 정보 삭제
-		int attachFileDeleteRows = myBoardAttachFileMapper.deleteAttachFiles(bno); //delete,update는 지운 행 없어도 0이 반환됨
+		int attachFileDeleteRows = myBoardAttachFileMapper.deleteAttachFiles(bno);
 		System.out.println("attachFileDeleteRows: " + attachFileDeleteRows);
-		
-		//업로드 파일 삭제
-		removeAttachFiles(attachFileList);
-
 		int rows = myBoardMapper.deleteMyBoard(bno);
 
 		return (rows == 1) ;
@@ -233,7 +224,7 @@ public class MyBoardServiceImpl implements MyBoardService {
 	}
 	
 	
-	//톰캣 서버의 업로드 파일 삭제 메서드
+	
 	private void removeAttachFiles(List<MyBoardAttachFileVO> attachFileList) {
 		if (attachFileList == null || attachFileList.size() == 0 ) {
 			return ;

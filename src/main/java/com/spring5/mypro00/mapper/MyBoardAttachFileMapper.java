@@ -18,7 +18,7 @@ public interface MyBoardAttachFileMapper {
 	//특정 게시물의 모든 첨부파일 삭제
 	//게시물 삭제 시, 해당 게시물의 모든 첨부파일을 삭제해야 게시물이 삭제됨
 	//(on delete cascade 옵션이 없는 F.K인 경우),  
-	public void deleteAttachFiles (Long bno) ;
+	public int deleteAttachFiles (Long bno) ;
 	
 	//특정 게시물의 첨부파일 목록조회
 	public List<MyBoardAttachFileVO> getAttachFileList (Long bno) ;
