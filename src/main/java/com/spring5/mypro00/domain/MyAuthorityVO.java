@@ -14,7 +14,8 @@ import lombok.ToString;
 @ToString
 //@EqualsAndHashCode
 public class MyAuthorityVO {
+	
+	private String userId ;
+	private String authority ;  //고객등급(Gold, Silver, Bronze, VIP,...)
 
-	private String userId;
-	private String authority;
 }
